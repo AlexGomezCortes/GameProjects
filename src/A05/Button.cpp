@@ -13,7 +13,6 @@ Button::Button()
 	TextRect.w = TextRect.h = 100;
 }
 
-
 Button::~Button()
 {
 }
