@@ -16,7 +16,7 @@ public:
 	std::string Texto;
 	std::string FontPath;
 	Color colorete;
-	int width, height, size;
+	int size;
 
 	SDL_Rect TextRect;
 
@@ -28,6 +28,8 @@ public:
 	void ChangeMessage(std::string mensaje);
 	void ChangePos(Vector2 newpos);
 	void ChangeSize(Vector2 newsize);
+	Vector2 getSize();
+	bool onClick();
 
 
 

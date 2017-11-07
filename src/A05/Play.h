@@ -18,6 +18,10 @@ public:
 
 	SDL_Texture* PlayBGTexture;
 
+
 	void update() override;
+	void eventHandler() override;
+	void draw() override;
+	bool Active() override;
 };
 

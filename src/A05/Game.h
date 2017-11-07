@@ -10,13 +10,16 @@ public:
 	~Game();
 
 	Scenes* CurrentScene = nullptr;
-	bool isRunning;
+	
+	void exit();
 
 	void Run();
-	void EventHandler();
+	
+	void stopGame();
 
+	template <typename T>
+	void goTo(T newScene);
 private:
-
 	//enum class Eventos{};
 };
 

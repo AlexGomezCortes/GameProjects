@@ -5,12 +5,13 @@
 Button::Button()
 {
 	size = 50;
-	TextID = MENU_TEXT_BUTTON_PLAY;
 	FontPath = PATH_FONT + "saiyan.ttf";
 	colorete={0,0,0,255};	
 	FontID = "SAIYAN_" + std::to_string(size);
 	TextRect.x = TextRect.y = 100;
 	TextRect.w = TextRect.h = 100;
+	Texto = "sample";
+	TextID = MENU_TEXT_BUTTON_PLAY + Texto;
 }
 
 Button::~Button()
@@ -20,7 +21,7 @@ Button::~Button()
 void Button::CargarFuente()
 {
 	Renderer::Instance()->LoadFont({FontID, FontPath, size});
-	Renderer::Instance()->LoadTextureText(FontID, {TextID, Texto, colorete, width, height});
+	Renderer::Instance()->LoadTextureText(FontID, {TextID, Texto, colorete, TextRect.w, TextRect.h});
 }
 
 void Button::ChangeFont(Font msg)
@@ -43,6 +44,7 @@ void Button::ChangeColor(Color color)
 void Button::ChangeMessage(std::string mensaje)
 {
 	Texto = mensaje;
+	TextID = MENU_TEXT_BUTTON_PLAY + Texto;
 }
 
 void Button::ChangePos(Vector2 newpos)
@@ -60,4 +62,19 @@ void Button::ChangeSize(Vector2 newsize)
 void Button::RenderizarTexto()
 {
 	Renderer::Instance()->PushImage(TextID, TextRect);
+}
+
+Vector2 Button::getSize() {
+	return{ TextRect.w, TextRect.h };
+}
+
+bool Button::onClick()
+{
+	int x, y;
+	SDL_GetMouseState(&x, &y);
+
+	if ((x >= TextRect.x && x <= TextRect.x + TextRect.w) && (y >= TextRect.y && y <= TextRect.y + TextRect.h))
+	return true;
+	
+	return false;
 }

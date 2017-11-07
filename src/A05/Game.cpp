@@ -3,7 +3,6 @@
 Game::Game()
 {
 	CurrentScene = new Menu();
-	isRunning = true;
 }
 
 
@@ -13,28 +12,31 @@ Game::~Game()
 
 void Game::Run()
 {
-
-	while (isRunning)
+	while (CurrentScene->Active())
 	{
-		EventHandler();
-		Renderer::Instance()->Clear();
-		CurrentScene->update();
-		Renderer::Instance()->Render();
-	}
-}
-
-void Game::EventHandler()
-{
-	SDL_Event evnt;
-
-	while (SDL_PollEvent(&evnt))
-	{
-		switch (evnt.type)
-		{
-		case SDL_QUIT:
-			isRunning = false;
-			break;
-
+		if (CurrentScene->Change()) {
+			delete CurrentScene;
+			CurrentScene = new Play();
 		}
+		Renderer::Instance()->Clear();
+		CurrentScene->eventHandler();
+		CurrentScene->update();
+		CurrentScene->draw();
+		Renderer::Instance()->Render();
+
 	}
 }
+
+void Game::stopGame()
+{
+	delete CurrentScene;
+}
+
+template <typename T>
+void Game::goTo(T newScene)
+{
+	delete CurrentScene;
+	CurrentScene = new T;
+}
+
+
